@@ -2,8 +2,6 @@ from fei.ppds import Thread
 from fei.ppds import Mutex
 
 
-
-
 class Shared:
 
     def __init__(self, end):
@@ -19,7 +17,7 @@ class Histogram(dict):
         for item in seq:
             self[item] = self.get(item, 0) + 1
 
-            
+
 def fnc1(shared):
     while True:
         if shared.counter >= shared.end:
@@ -36,10 +34,10 @@ def fnc2(shared):
         if shared.counter >= shared.end:
             break
         shared.array[shared.counter] += 1
-        shared.mutex.unlock()       
+        shared.mutex.unlock()
         shared.counter += 1
 
-        
+
 def fnc3(shared):
     while shared.counter < shared.end:
         shared.mutex.lock()
@@ -51,7 +49,6 @@ def fnc3(shared):
         shared.mutex.unlock()
 
 
-
 for _ in range(10):
     sh = Shared(1000000)
     t1 = Thread(fnc3, sh)
@@ -60,4 +57,4 @@ for _ in range(10):
     t1.join()
     t2.join()
 
-    print(Histogram(sh.array)) 
+    print Histogram(sh.array)
