@@ -1,0 +1,47 @@
+Ako prvé som umiestnil zámok po podmienke, čo malo za dôsledok, že teda bolo 100% jednotiek ale aj out of range exception.
+Tá je tam preto lebo oba thredy prejdú podmienku a až potom sa jeden zastaví, ten druhý prejde funkciou a nastaví index na out of range, následne sa thread1
+uvolní a prisúpi k indexu.
+
+def fnc1(shared):
+    while True:
+        if shared.counter >= shared.end:
+            break
+        shared.mutex.lock()
+        shared.array[shared.counter] += 1
+        shared.counter += 1
+        shared.mutex.unlock()
+------------------------------------------------------------------------
+Ďalšie riešenie bolo dať do KO aj samotnú podmienku, čo ale spôsobilo deadlock.
+Thread ktorý je na poslednom indexe uzamkne, podmienka sa splní a volá break, nikdy 
+však nezavolá unlock a tak nastáva deadlock.
+
+def fnc2(shared):
+    while True:
+        shared.mutex.lock()
+        if shared.counter >= shared.end:
+            break
+        shared.array[shared.counter] += 1
+        shared.mutex.unlock()       
+        shared.counter += 1
+
+---------------------------------------------------------------------------------
+Pôvodný plán riešenia bol pozmeniť while cyklus, čo sa ukázalo ako úplne zbyočné :D,
+riešenie bolo nakoniec jednoduchšie a to pred breakom uvoľniť zámok.
+
+def fnc3(shared):
+    while shared.counter < shared.end:
+        shared.mutex.lock()
+        if shared.counter >= shared.end:
+            shared.mutex.unlock()
+            break
+        shared.array[shared.counter] += 1
+        shared.counter += 1
+        shared.mutex.unlock()
+
+
+
+
+
+
+
+        
