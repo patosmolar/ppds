@@ -57,4 +57,3 @@ for _ in range(10):
     t1.join()
     t2.join()
 
-    print Histogram(sh.array)
