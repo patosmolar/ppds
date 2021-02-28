@@ -1,0 +1,10 @@
+Úlohy 1 a 2 sú viac menej podľa cvičenia. Vo výsledku treida SimpleBarrier obsahuje motódu wait_with_semaphore, ktorá pomocou
+nabitého turniketu (semafor) dokáže opätovné vykonávanie, a metóda wait_with_events sa vykonáva podobne ale za pomoci Eventov.
+
+ 
+Úloha 3:
+Trieda SharedClass obsahuje vysledné pole s fib. postupnosťou, na začiatku je inicializovaná 0 a 1.
+Nasleduje list 'indexes' o veľkosti n, ktorý skladuje objekty Semaphore/Event. Objekt vybraného typu je na indexe 0 nastavený na .signal(), 
+tým zabezpečím že iba prvý thread bude môcť vykonávať operáciu, a ostanté budú čakať.
+Samotná funkcia iba skontrolje čí daný thread je na rade, ak áno vykoná výpočet a uvoľni thread na ďalšom indexe.
+Pre test, for cyklus na konci pridáva thredy od posledého ,a tak som si istý že všetky postupne čakajú.
