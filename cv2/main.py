@@ -66,7 +66,6 @@ def uloha_2(b1, b2, thread_name):
 class SharedObject:
     def __init__(self, n):
         self.n = n
-        self.mutex = Mutex()
         self.fib = [0, 1] + [-1]*n
 
         self.indexes = [0] * (n)
