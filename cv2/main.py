@@ -39,11 +39,38 @@ def uloha_1(barrier, thread_id):
     barrier.wait_with_events()
     print("vlakno %d po bariere" % thread_id)
 
-barrier = SimpleBarrier(5)
+def rendezvous(thread_name):
+    sleep(randint(1,10)/10)
+    print('rendezvous: %s' % thread_name)
+ 
+ 
+def ko(thread_name):
+    print('ko: %s' % thread_name)
+    sleep(randint(1,10)/10)
+ 
+ 
+def uloha_2(b1,b2,thread_name):
+    """Kazde vlakno vykonava kod funkcie 'barrier_example'.
+    Doplnte synchronizaciu tak, aby sa vsetky vlakna pockali
+    nielen pred vykonanim funkcie 'ko', ale aj
+    *vzdy* pred zacatim vykonavania funkcie 'rendezvous'.
+    """
+ 
+    while True:
+        rendezvous(thread_name)
+        b1.wait_with_events()
+        ko(thread_name)
+        b1.wait_with_events()
+ 
+ 
+
+
+barr1 = SimpleBarrier(5)
+barr2 = SimpleBarrier(5)
 
 threads = list()
 for i in range(5):
-    t = Thread(uloha_1, barrier, i)
+    t = Thread(uloha_2, barr1,barr2, f'Thread {i}')
     threads.append(t)
  
 for t in threads:
