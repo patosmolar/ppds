@@ -68,23 +68,23 @@ class SharedObject:
         self.n = n
         self.mutex = Mutex()
         self.fib = [0, 1] + [-1]*n
-        self.semaphores = [0] * (n+2)
-        for i in range(n+2):
-            self.semaphores[i] = Semaphore(0)
-        self.semaphores[0].signal(1)
-        self.semaphores[1].signal(2)
 
-    def perform_fib_semaphore(self, i):
-        self.semaphores[i - 1].wait()
-        self.semaphores[i - 2].wait()
-        self.fib[i] = self.fib[i-1] + self.fib[i-2]
-        self.semaphores[i].signal(2)
+        self.indexes = [0] * (n)
+        for i in range(n):
+            self.indexes[i] = Event()
+        self.indexes[0].signal()
+
+    def perform_fib(self, i):
+        self.indexes[i].wait()
+        self.fib[i+2] = self.fib[i-1+2] + self.fib[i-2+2]
+        if i < self.n-1:
+            self.indexes[i+1].signal()
 
 
 def uloha_3(shared, id):
-    #print("in %s" % (id))
-    shared.perform_fib_semaphore(id)
-    #print("out %s" % (id))
+    # print("in %s" % (id))
+    shared.perform_fib(id)
+    # print("out %s" % (id))
 
 
 n_threads = 10
@@ -93,7 +93,7 @@ threads = list()
 shared = SharedObject(n_threads)
 
 for id in reversed(range(n_threads)):
-    threads.append(Thread(uloha_3, shared, id+2))
+    threads.append(Thread(uloha_3, shared, id))
 
 for t in threads:
     t.join()
