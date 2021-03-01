@@ -8,3 +8,7 @@ Nasleduje list 'indexes' o veľkosti n, ktorý skladuje objekty Semaphore/Event.
 tým zabezpečím že iba prvý thread bude môcť vykonávať operáciu, a ostanté budú čakať.
 Samotná funkcia iba skontrolje čí daný thread je na rade, ak áno vykoná výpočet a uvoľni thread na ďalšom indexe.
 Pre test, for cyklus na konci pridáva thredy od posledého ,a tak som si istý že všetky postupne čakajú.
+
+1) Ja som to vyreišil pomocou N semaforov/udalostí. Každý thread vyžaduje vlastný synch. objekt a nie je potrebný Mutex.
+
+2) Signaizácia. Každý thread čaká na signál od predchádzajúceho. Samozrejme okrem prvého ktorý ide automaticky ďalej a signalizje nasledujúcemu aby išiel.
