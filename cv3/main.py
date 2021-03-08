@@ -34,15 +34,15 @@ def read_write():
     sh = Shared()
 
     n_writers = 1
-    n_readers = 5
+    n_readers = 2
     t_read = 10
     t_write = 50
-    n_repeats = 2
+    n_repeats = 10
 
     def read(read_ls, shared):
         for _ in range(n_repeats):
-            shared.turniket.wait()
-            shared.turniket.signal()
+            # shared.turniket.wait()
+            # shared.turniket.signal()
             print("before read")
             read_ls.lock(shared.semaphore)
             print("inside read")
@@ -52,12 +52,12 @@ def read_write():
 
     def write(shared):
         for _ in range(n_repeats):
-            shared.turniket.wait()
+            # shared.turniket.wait()
             print("before of write")
             shared.semaphore.wait()
             sleep(randint(1, 10) / t_write)
             print("inside write")
-            shared.turniket.signal()
+            # shared.turniket.signal()
             shared.semaphore.signal()
             print("outside write")
             
