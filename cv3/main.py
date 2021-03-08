@@ -34,7 +34,7 @@ def read_write():
     sh = Shared()
 
     n_writers = 1
-    n_readers = 2
+    n_readers = 5
     t_read = 10
     t_write = 50
     n_repeats = 10
@@ -60,7 +60,6 @@ def read_write():
             # shared.turniket.signal()
             shared.semaphore.signal()
             print("outside write")
-            
 
     threads = []
 
