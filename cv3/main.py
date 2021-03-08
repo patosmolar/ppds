@@ -33,23 +33,29 @@ def read_write():
     rd_ls = LightSwitch()
     sh = Shared()
 
+    n_writers = 1
+    n_readers = 5
+    t_read = 10
+    t_write = 50
+    n_repeats = 2
+
     def read(read_ls, shared):
-        while True:
+        for _ in range(n_repeats):
             shared.turniket.wait()
             shared.turniket.signal()
             print("before read")
             read_ls.lock(shared.semaphore)
             print("inside read")
-            sleep(randint(1, 10) / 10)
+            sleep(randint(1, 10) / t_read)
             read_ls.unlock(shared.semaphore)
             print("outside read")
 
     def write(shared):
-        while True:
+        for _ in range(n_repeats):
             shared.turniket.wait()
             print("before of write")
             shared.semaphore.wait()
-            sleep(randint(1, 10) / 10)
+            sleep(randint(1, 10) / t_write)
             print("inside write")
             shared.turniket.signal()
             shared.semaphore.signal()
@@ -58,10 +64,10 @@ def read_write():
 
     threads = []
 
-    for _ in range(5):
+    for _ in range(n_readers):
         t = Thread(read, rd_ls, sh)
         threads.append(t)
-    for _ in range(1):
+    for _ in range(n_writers):
         t = Thread(write, sh)
         threads.append(t)
     for t in threads:
