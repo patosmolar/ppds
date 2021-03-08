@@ -26,6 +26,7 @@ class LightSwitch(object):
 class Shared(object):
     def __init__(self):
         self.semaphore = Semaphore(1)
+        self.turniket =  Semaphore(1)
 
 
 def read_write():
@@ -33,30 +34,34 @@ def read_write():
     sh = Shared()
 
     def read(read_ls, shared):
-        while True:   
+        while True:
+            shared.turniket.wait()
+            shared.turniket.signal()
             print("before read")
             read_ls.lock(shared.semaphore)
             print("inside read")
-            sleep(randint(1,10)/10)
+            sleep(randint(1, 10) / 10)
             read_ls.unlock(shared.semaphore)
             print("outside read")
 
     def write(shared):
-        while True:   
+        while True:
+            shared.turniket.wait()
             print("before of write")
             shared.semaphore.wait()
-            sleep(randint(1,10)/10)
+            sleep(randint(1, 10) / 10)
             print("inside write")
             shared.semaphore.signal()
             print("outside write")
+            shared.turniket.signal()
 
-    threads= []
+    threads = []
 
     for _ in range(5):
-        t = Thread(read,rd_ls,sh)
+        t = Thread(read, rd_ls, sh)
         threads.append(t)
     for _ in range(1):
-        t = Thread(write,sh)
+        t = Thread(write, sh)
         threads.append(t)
     for t in threads:
         t.join()
