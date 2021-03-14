@@ -25,15 +25,33 @@ class LightSwitch():
         self.mutex.unlock()
 
 
+class SimpleBarrier:
+    def __init__(self, n):
+        self.number_to_block = n
+        self.count = 0
+        self.mutex = Mutex()        
+        self.event = Event()
+    
+    def wait_with_events(self):
+        self.mutex.lock()        
+        self.count += 1
+        if self.count == self.number_to_block:
+            self.event.signal()
+        self.mutex.unlock()
+        self.event.wait()
+
+
 class PowerPlant():
     def __init__(self):
         self.ls_monitor = LightSwitch()
         self.ls_sensor = LightSwitch()
         self.monitor_acess = Semaphore(1)
         self.sensor_acess = Semaphore(1)
+        self.barrier = SimpleBarrier(3)
 
     def monitor(self, monitor_id):
         while True:
+            self.barrier.event.wait()
             self.monitor_acess.wait()
             n_monitors_reading = self.ls_monitor.lock(self.sensor_acess)
             self.monitor_acess.signal()
@@ -59,6 +77,7 @@ class PowerPlant():
             sleep(actualisation_time)
 
             self.sensor_acess.signal()
+            self.barrier.wait_with_events()
             self.ls_sensor.unlock(self.monitor_acess)
 
 
