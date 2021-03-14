@@ -25,7 +25,7 @@ class LightSwitch(object):
         self.mutex.unlock()
 
 
-class Elektraren(object):
+class PowerPlant(object):
     def __init__(self):
         self.ls_monitor = LightSwitch()
         self.ls_sensor = LightSwitch()
