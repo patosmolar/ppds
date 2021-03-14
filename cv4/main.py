@@ -44,3 +44,17 @@ class Elektraren(object):
             )
             sleep(read_time)
             self.monitor_ls.unlock(self.no_sensor)
+
+    def sensor(self, sensor_id, actualisation_time):
+        while True:
+            sleep(randint(50, 60) / 1000)
+            n_sensors_writing = self.ls_sensor.lock(self.monitor_acess)
+            self.sensor_acess.wait()
+            print(
+                'cidlo "d": pocet_zapisujucich_cidiel=d, trvanie_zapisu=f\n'
+                % (sensor_id, n_sensors_writing, actualisation_time)
+            )
+            sleep(actualisation_time)
+
+            self.sensor_acess.signal()
+            self.ls_sensor.unlock(self.monitor_acess)
