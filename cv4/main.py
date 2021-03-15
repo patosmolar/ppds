@@ -29,11 +29,11 @@ class SimpleBarrier:
     def __init__(self, n):
         self.number_to_block = n
         self.count = 0
-        self.mutex = Mutex()        
+        self.mutex = Mutex()
         self.event = Event()
-    
+
     def wait_with_events(self):
-        self.mutex.lock()        
+        self.mutex.lock()
         self.count += 1
         if self.count == self.number_to_block:
             self.event.signal()
