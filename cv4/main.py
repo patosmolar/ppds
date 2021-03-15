@@ -70,14 +70,16 @@ class PowerPlant():
             actualisation_time = randint(time_range_from, time_range_to) / 1000
             n_sensors_writing = self.ls_sensor.lock(self.monitor_acess)
             self.sensor_acess.wait()
+            self.sensor_acess.signal()
             print(
                 'cidlo "%02d": pocet_zapisujucich_cidiel=%02d, '
                 'trvanie_zapisu=%03f\n'
                 % (sensor_id, n_sensors_writing, actualisation_time)
             )
+            
             sleep(actualisation_time)
 
-            self.sensor_acess.signal()
+            
             self.barrier.wait_with_events()
             self.ls_sensor.unlock(self.monitor_acess)
 
