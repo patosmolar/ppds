@@ -64,9 +64,10 @@ class PowerPlant():
             sleep(read_time)
             self.ls_monitor.unlock(self.sensor_acess)
 
-    def sensor(self, sensor_id, actualisation_time):
+    def sensor(self, sensor_id, time_range_from, time_range_to):
         while True:
             sleep(randint(50, 60) / 1000)
+            actualisation_time = randint(time_range_from, time_range_to) / 1000
             n_sensors_writing = self.ls_sensor.lock(self.monitor_acess)
             self.sensor_acess.wait()
             print(
@@ -84,13 +85,11 @@ class PowerPlant():
 p = PowerPlant()
 threads = []
 for i in range(2):
-    sensor_pt_time = randint(10, 20) / 1000
-    t = Thread(p.sensor, i, sensor_pt_time)
+    t = Thread(p.sensor, i, 10, 20)
     threads.append(t)
 
 for i in range(1):
-    sensor_h_time = randint(20, 25) / 1000
-    t = Thread(p.sensor, i + 2, sensor_h_time)
+    t = Thread(p.sensor, i + 2, 20, 25)
     threads.append(t)
 
 for i in range(8):
