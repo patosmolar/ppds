@@ -4,8 +4,10 @@ from time import sleep
 
 
 
-M = 2
+M = 3
 N = 3
+#'C' - number of cooks
+C = 2
 
 
 class SimpleBarrier:
@@ -35,8 +37,24 @@ class SimpleBarrier:
             self.sem.signal(self.N)
         self.mutex.unlock()
         self.sem.wait()
+
+    def cooks_wait(self,
+            cook_id,
+            shared):
+        self.mutex.lock()
+        self.cnt += 1
+        print("kuchar %2d úspešne dokončil svoju časť" % (cook_id))
+        if self.cnt == self.N:
+            self.cnt = 0
+            shared.servings += M
+            print("kuchar %2d úspešne pridal porciu do hrnca" % (cook_id))
+            self.sem.signal(self.N)
+            shared.full_pot.signal()
+        self.mutex.unlock()
+        self.sem.wait()
  
- 
+
+
 class Shared:
     """V tomto pripade musime pouzit zdielanu strukturu.
     Kedze Python struktury nema, pouzijeme triedu bez vlastnych metod.
@@ -53,7 +71,7 @@ class Shared:
         self.empty_pot = Semaphore(0)
         self.barrier1 = SimpleBarrier(N)
         self.barrier2 = SimpleBarrier(N)
- 
+        self.cooks_barier = SimpleBarrier(C)
  
 def get_serving_from_pot(savage_id, shared):
     """Pristupujeme ku zdielanej premennej.
@@ -93,7 +111,7 @@ def savage(savage_id, shared):
               (savage_id, shared.servings))
         if shared.servings == 0:
             print("divoch %2d: budim kuchara" % savage_id)
-            shared.empty_pot.signal()
+            shared.empty_pot.signal(C)
             shared.full_pot.wait()
         get_serving_from_pot(savage_id, shared)
         shared.mutex.unlock()
@@ -101,19 +119,18 @@ def savage(savage_id, shared):
         eat(savage_id)
  
  
-def put_servings_in_pot(M, shared):
+def prepare_part_of_meal(id):
     """M je pocet porcii, ktore vklada kuchar do hrnca.
     Hrniec je reprezentovany zdielanou premennou servings.
     Ta udrziava informaciu o tom, kolko porcii je v hrnci k dispozicii.
-    """
- 
-    print("kuchar: varim")
+    """ 
+    print("kuchar %2d: varim" % (id))
     # navarenie jedla tiez cosi trva...
     sleep(0.4 + randint(0, 2) / 10)
-    shared.servings += M
+    
  
  
-def cook(M, shared):
+def cook(M, shared, cook_id):
     """Na strane kuchara netreba robit ziadne modifikacie kodu.
     Riesenie je standardne podla prednasky.
     Navyse je iba argument M, ktorym explicitne hovorime, kolko porcii
@@ -124,8 +141,9 @@ def cook(M, shared):
  
     while True:
         shared.empty_pot.wait()
-        put_servings_in_pot(M, shared)
-        shared.full_pot.signal()
+        prepare_part_of_meal(cook_id)
+        shared.cooks_barier.cooks_wait(cook_id, shared)
+        
  
  
 def init_and_run(N, M):
@@ -134,7 +152,9 @@ def init_and_run(N, M):
     shared = Shared()
     for savage_id in range(0, N):
         threads.append(Thread(savage, savage_id, shared))
-    threads.append(Thread(cook, M, shared))
+
+    for cook_id in range(0, C):
+        threads.append(Thread(cook, M, shared, cook_id))
  
     for t in threads:
         t.join()
