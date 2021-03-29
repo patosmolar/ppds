@@ -32,31 +32,53 @@ class Shared:
 
 def hacker(hacker_id, shared):
     while True:
+        # inicializácia lokálnej premennej
         is_capitan = False
+
+        # začiatok KO
         shared.mutex.lock()
         shared.hackers += 1
+
+        # prvá podmienka pre vyplávanie
         if shared.hackers == 4:
+            # posledné vlákno je teda kapitán
             is_capitan = True
+            # vynuluje počítadlo
             shared.hackers -= 4
+            # pustí 3 čakajúcich + seba
             shared.hackersQ.signal(4)
+
+        # alternatívna podmienka pre vyplávanie
         elif shared.hackers == 2 and shared.serfs >= 2:
+            # o5 je posledný kapitán
             is_capitan = True
+            # vynuluje a pustí jedného + seba
             shared.hackers -= 2
             shared.hackersQ.signal(2)
+            # vynuluje a pustí dvoch čakajúcich serfs
             shared.serfs -= 2
             shared.servesQ.signal(2)
         else:
+            # ak nie su splnené podmienky, čaká a pustí dalšieho do KO
             shared.mutex.unlock()
+
+        # tu čakajú kým nebude splnená hociaká podmienka
         shared.hackersQ.wait()
+
+        # init mena pre výpis do funkcie
         name = "Hacker : %2d" % hacker_id
+        # simulacia nalodenia
         board(name)
+        # tu sa pekne počkáme kým nebudeme 4
         shared.bar.wait()
 
+        # kapitán naštartuje loď + uvolní svoj mutex
         if is_capitan:
             row_boat()
             shared.mutex.unlock()
 
 
+# to isté ako hacker, iba opačne
 def serve(serve_id, shared):
     while True:
         is_capitan = False
@@ -84,15 +106,16 @@ def serve(serve_id, shared):
             shared.mutex.unlock()
 
 
+# simulácia nalodenia, name = meno nastupujucého
 def board(name):
     sleep(0.4 + randint(0, 2) / 10)
     print("%s sa práve nalodil" % name)
 
 
+# štart lode
 def row_boat():
     print("HURAAAAAAAA, VYRÁŽAME!!!!")
     sleep(1 + randint(0, 2))
-    
 
 
 def init_and_run():
