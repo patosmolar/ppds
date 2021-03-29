@@ -53,8 +53,8 @@ def hacker(hacker_id, shared):
         shared.bar.wait()
 
         if shared.is_capitan:
-            rowBoat(shared)
-            shared.mutex.unock()
+            row_boat(shared)
+            shared.mutex.unlock()
 
 
 def serve(serve_id, shared):
@@ -79,8 +79,8 @@ def serve(serve_id, shared):
         shared.bar.wait()
 
         if shared.is_capitan:
-            rowBoat(shared)
-            shared.mutex.unock()
+            row_boat(shared)
+            shared.mutex.unlock()
 
 
 def board(name):
