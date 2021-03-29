@@ -35,6 +35,9 @@ def hacker(hacker_id, shared):
         # inicializácia lokálnej premennej
         is_capitan = False
 
+        # init mena pre výpis do funkcie
+        name = "Hacker : %2d" % hacker_id
+
         # začiatok KO
         shared.mutex.lock()
         shared.hackers += 1
@@ -43,6 +46,7 @@ def hacker(hacker_id, shared):
         if shared.hackers == 4:
             # posledné vlákno je teda kapitán
             is_capitan = True
+            print("%s sa stal Kapitánom! HIP-HIP-HURAAA" % name)
             # vynuluje počítadlo
             shared.hackers -= 4
             # pustí 3 čakajúcich + seba
@@ -52,6 +56,7 @@ def hacker(hacker_id, shared):
         elif shared.hackers == 2 and shared.serfs >= 2:
             # o5 je posledný kapitán
             is_capitan = True
+            print("%s sa stal Kapitánom! HIP-HIP-HURAAA" % name)
             # vynuluje a pustí jedného + seba
             shared.hackers -= 2
             shared.hackersQ.signal(2)
@@ -62,11 +67,11 @@ def hacker(hacker_id, shared):
             # ak nie su splnené podmienky, čaká a pustí dalšieho do KO
             shared.mutex.unlock()
 
+        print("%s čaká na nalodenie" % name)
+
         # tu čakajú kým nebude splnená hociaká podmienka
         shared.hackersQ.wait()
 
-        # init mena pre výpis do funkcie
-        name = "Hacker : %2d" % hacker_id
         # simulacia nalodenia
         board(name)
         # tu sa pekne počkáme kým nebudeme 4
@@ -82,22 +87,27 @@ def hacker(hacker_id, shared):
 def serve(serve_id, shared):
     while True:
         is_capitan = False
+        name = "Serve : %2d" % serve_id
         shared.mutex.lock()
         shared.serfs += 1
         if shared.serfs == 4:
             is_capitan = True
+            print("%s sa stal Kapitánom! HIP-HIP-HURAAA" % name)
             shared.serfs -= 4
             shared.servesQ.signal(4)
         elif shared.serfs == 2 and shared.hackers >= 2:
             is_capitan = True
+            print("%s sa stal Kapitánom! HIP-HIP-HURAAA" % name)
             shared.serfs -= 2
             shared.servesQ.signal(2)
             shared.hackers -= 2
             shared.hackersQ.signal(2)
         else:
             shared.mutex.unlock()
+
+        print("%s čaká na nalodenie" % name)
         shared.servesQ.wait()
-        name = "Serve : %2d" % serve_id
+
         board(name)
         shared.bar.wait()
 
