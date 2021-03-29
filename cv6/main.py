@@ -93,3 +93,20 @@ def row_boat(shared):
     shared.is_capitan = False
 
 
+def init_and_run():
+    """Spustenie modelu"""
+    threads = list()
+    shared = Shared()
+
+    for hacker_id in range(0, 4):
+        threads.append(Thread(hacker, hacker_id, shared))
+
+    for serve_id in range(0, 4):
+        threads.append(Thread(serve, serve_id, shared))
+
+    for t in threads:
+        t.join()
+
+
+if __name__ == "__main__":
+    init_and_run()
