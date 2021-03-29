@@ -32,7 +32,7 @@ class Shared:
         self.bar = SimpleBarrier(4)
 
 
-def hacker(hacker_id,shared):
+def hacker(hacker_id, shared):
     shared.mutex.lock()
     shared.hackers += 1
     if shared.hackers == 4:
@@ -47,7 +47,7 @@ def hacker(hacker_id,shared):
         shared.servesQ.signal(2)
     else:
         shared.mutex.unlock()
-    hackersQ.wait()
+    shared.hackersQ.wait()
     board()
     shared.bar.wait()
 
