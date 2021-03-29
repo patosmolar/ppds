@@ -10,8 +10,7 @@ class SimpleBarrier:
         self.cnt = 0
         self.sem = Semaphore(0)
 
-    def wait(self,
-             savage_id):
+    def wait(self):
         self.mutex.lock()
         self.cnt += 1
         if self.cnt == self.N:
@@ -33,60 +32,64 @@ class Shared:
 
 
 def hacker(hacker_id, shared):
-    shared.mutex.lock()
-    shared.hackers += 1
-    if shared.hackers == 4:
-        shared.is_capitan = True
-        shared.hackers -= 4
-        shared.hackersQ.signal(4)
-    elif shared.hackers == 2 and shared.serfs >= 2:
-        shared.is_capitan = True
-        shared.hackers -= 2
-        shared.hackersQ.signal(2)
-        shared.serfs -= 2
-        shared.servesQ.signal(2)
-    else:
-        shared.mutex.unlock()
-    shared.hackersQ.wait()
-    name = "Hacker : %2d" (hacker_id)
-    board(name)
-    shared.bar.wait()
+    while True:
+        shared.mutex.lock()
+        shared.hackers += 1
+        if shared.hackers == 4:
+            shared.is_capitan = True
+            shared.hackers -= 4
+            shared.hackersQ.signal(4)
+        elif shared.hackers == 2 and shared.serfs >= 2:
+            shared.is_capitan = True
+            shared.hackers -= 2
+            shared.hackersQ.signal(2)
+            shared.serfs -= 2
+            shared.servesQ.signal(2)
+        else:
+            shared.mutex.unlock()
+        shared.hackersQ.wait()
+        name = "Hacker : %2d" , (hacker_id)
+        board(name)
+        shared.bar.wait()
 
-    if shared.is_capitan:
-        rowBoat()
-        shared.mutex.unock()
+        if shared.is_capitan:
+            rowBoat(shared)
+            shared.mutex.unock()
 
 
 def serve(serve_id, shared):
-    shared.mutex.lock()
-    shared.serfs += 1
-    if shared.serfs == 4:
-        shared.is_capitan = True
-        shared.serfs -= 4
-        shared.servesQ.signal(4)
-    elif shared.serfs == 2 and shared.hackers >= 2:
-        shared.is_capitan = True
-        shared.serfs -= 2
-        shared.servesQ.signal(2)
-        shared.hackers -= 2
-        shared.hackersQ.signal(2)
-    else:
-        shared.mutex.unlock()
-    shared.hackersQ.wait()
-    name = "Serve : %2d" (serve_id)
-    board(name)
-    shared.bar.wait()
+    while True:
+        shared.mutex.lock()
+        shared.serfs += 1
+        if shared.serfs == 4:
+            shared.is_capitan = True
+            shared.serfs -= 4
+            shared.servesQ.signal(4)
+        elif shared.serfs == 2 and shared.hackers >= 2:
+            shared.is_capitan = True
+            shared.serfs -= 2
+            shared.servesQ.signal(2)
+            shared.hackers -= 2
+            shared.hackersQ.signal(2)
+        else:
+            shared.mutex.unlock()
+        shared.hackersQ.wait()
+        name = "Serve : %2d" , (serve_id)
+        board(name)
+        shared.bar.wait()
 
-    if shared.is_capitan:
-        rowBoat(shared)
-        shared.mutex.unock()
+        if shared.is_capitan:
+            rowBoat(shared)
+            shared.mutex.unock()
 
 
 def board(name):
     sleep(0.4 + randint(0, 2) / 10)
-    print("%2d sa práve nalodil" (name))
+    print("%2d sa práve nalodil", (name))
 
 
 def row_boat(shared):
     print("HURAAAAAAAA, VYRÁŽAME!!!!")
     shared.is_capitan = False
+
+
