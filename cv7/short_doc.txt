@@ -1,0 +1,1 @@
+Cieľom zadania je demonštrovať scheduler, ktorý dokáže prioritizovať úlohy. V tomto deme sa to deje vždy pri 3. iterácii loopu. V prípade inej úlohy je teda potrebné donastaviť scheduler pre iné potreby.
