@@ -1,3 +1,28 @@
+class Scheduler:
+
+    def __init__(self):
+        self.list = []
+        self.counter = 0
+
+    # schedule at the end of list
+    def schedule(self, task):
+        self.list.append(task)
+
+    # schedule at start of list
+    def schedule_high_priority(self, task):
+        self.list.insert(0, task)
+
+    # main loop
+    def start(self):
+        while self.list:
+            self.counter += 1
+            task = self.list.pop(0)
+            task.send(self.counter)
+            if self.counter % 3 == 0:
+                self.schedule_high_priority(task)
+            else:
+                self.schedule(task)
+
 
 def cor(m_id):
     mid = m_id
