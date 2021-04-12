@@ -29,3 +29,12 @@ def cor(m_id):
     while True:
         val = (yield)
         print("id :%d vypisuje hodnotu %d" % (mid,  val))
+
+
+if __name__ == "__main__":
+    s = Scheduler()
+    for id in range(1, 10):
+        t = cor(id)
+        t.send(None)
+        s.schedule(t)
+    s.loop()
