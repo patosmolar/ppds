@@ -13,20 +13,23 @@ class Scheduler:
         self.list.insert(0, task)
 
     # main loop
-    def start(self):
+    def start_loop(self):
         while self.list:
             self.counter += 1
             task = self.list.pop(0)
-            task.send(self.counter)
-            if self.counter % 3 == 0:
-                self.schedule_high_priority(task)
-            else:
-                self.schedule(task)
+            try:
+                task.send(self.counter)
+                if self.counter % 3 == 0:
+                    self.schedule_high_priority(task)
+                else:
+                    self.schedule(task)
+            except StopIteration:
+                break
 
 
 def cor(m_id):
     mid = m_id
-    while True:
+    for a in range(50):
         val = (yield)
         print("id :%d vypisuje hodnotu %d" % (mid,  val))
 
@@ -37,4 +40,4 @@ if __name__ == "__main__":
         t = cor(id)
         t.send(None)
         s.schedule(t)
-    s.loop()
+    s.start_loop()
