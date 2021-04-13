@@ -24,7 +24,7 @@ class Scheduler:
                 else:
                     self.schedule(task)
             except StopIteration:
-                break
+                pass
 
 
 def cor(m_id):
