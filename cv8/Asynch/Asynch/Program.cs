@@ -9,9 +9,9 @@ namespace AsyncBreakfast
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            var eggsTask = FryEggs(2);
-            var baconTask = FryBacon(3);
-            var toastTask = ToastBread(2);
+            var eggsTask = FryEggsAsync(2);
+            var baconTask = FryBaconAsync(3);
+            var toastTask = ToastBreadAsync(2);
 
             Coffee cup = PourCoffee();
             Console.WriteLine("coffee is ready");
@@ -48,7 +48,7 @@ namespace AsyncBreakfast
         private static void ApplyButter(Toast toast) =>
             Console.WriteLine("Putting butter on the toast");
 
-        private static async Task<Toast> ToastBread(int slices)
+        private static async Task<Toast> ToastBreadAsync(int slices)
         {
             for (int slice = 0; slice < slices; slice++)
             {
@@ -61,7 +61,7 @@ namespace AsyncBreakfast
             return new Toast();
         }
 
-        private static async Task<Bacon> FryBacon(int slices)
+        private static async Task<Bacon> FryBaconAsync(int slices)
         {
             Console.WriteLine($"putting {slices} slices of bacon in the pan");
             Console.WriteLine("cooking first side of bacon...");
@@ -77,7 +77,7 @@ namespace AsyncBreakfast
             return new Bacon();
         }
 
-        private static async Task<Egg> FryEggs(int howMany)
+        private static async Task<Egg> FryEggsAsync(int howMany)
         {
             Console.WriteLine("Warming the egg pan...");
             await Task.Delay(3000);
