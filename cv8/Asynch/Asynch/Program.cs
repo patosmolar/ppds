@@ -5,19 +5,24 @@ namespace AsyncBreakfast
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            var eggsTask = FryEggs(2);
+            var baconTask = FryBacon(3);
+            var toastTask = ToastBread(2);
+
             Coffee cup = PourCoffee();
             Console.WriteLine("coffee is ready");
 
-            var eggsTask = FryEggs(2);
+            Egg egg = await eggsTask;
             Console.WriteLine("eggs are ready");
 
-            Bacon bacon = FryBacon(3);
+            Bacon bacon = await baconTask;
             Console.WriteLine("bacon is ready");
 
-            Toast toast = ToastBread(2);
+            Toast toast = await toastTask;
             ApplyButter(toast);
             ApplyJam(toast);
             Console.WriteLine("toast is ready");
@@ -50,7 +55,7 @@ namespace AsyncBreakfast
                 Console.WriteLine("Putting a slice of bread in the toaster");
             }
             Console.WriteLine("Start toasting...");
-            Task.Delay(3000).Wait();
+            await Task.Delay(3000);
             Console.WriteLine("Remove toast from toaster");
 
             return new Toast();
