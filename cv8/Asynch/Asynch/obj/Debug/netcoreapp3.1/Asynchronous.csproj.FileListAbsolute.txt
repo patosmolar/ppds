@@ -37,3 +37,16 @@ C:\Users\patos\Downloads\CleanCodeMaterials\CleanCodeMaterials\Code\Asynch\Async
 C:\Users\patos\Downloads\CleanCodeMaterials\CleanCodeMaterials\Code\Asynch\Asynch\obj\Debug\netcoreapp3.1\Asynchronous.dll
 C:\Users\patos\Downloads\CleanCodeMaterials\CleanCodeMaterials\Code\Asynch\Asynch\obj\Debug\netcoreapp3.1\Asynchronous.pdb
 C:\Users\patos\Downloads\CleanCodeMaterials\CleanCodeMaterials\Code\Asynch\Asynch\obj\Debug\netcoreapp3.1\Asynchronous.genruntimeconfig.cache
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\bin\Debug\netcoreapp3.1\Asynchronous.exe
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\bin\Debug\netcoreapp3.1\Asynchronous.deps.json
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\bin\Debug\netcoreapp3.1\Asynchronous.runtimeconfig.json
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\bin\Debug\netcoreapp3.1\Asynchronous.runtimeconfig.dev.json
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\bin\Debug\netcoreapp3.1\Asynchronous.dll
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\bin\Debug\netcoreapp3.1\Asynchronous.pdb
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\obj\Debug\netcoreapp3.1\Asynchronous.csprojAssemblyReference.cache
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\obj\Debug\netcoreapp3.1\Asynchronous.csproj.CoreCompileInputs.cache
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\obj\Debug\netcoreapp3.1\Asynchronous.AssemblyInfoInputs.cache
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\obj\Debug\netcoreapp3.1\Asynchronous.AssemblyInfo.cs
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\obj\Debug\netcoreapp3.1\Asynchronous.dll
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\obj\Debug\netcoreapp3.1\Asynchronous.pdb
+C:\Users\patos\Desktop\Skola\ZS4roc\ppds\cv8\Asynch\Asynch\obj\Debug\netcoreapp3.1\Asynchronous.genruntimeconfig.cache

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\patos\\Downloads\\CleanCodeMaterials\\CleanCodeMaterials\\Code\\Asynch\\Asynch\\Asynchronous.csproj": {}
+    "C:\\Users\\patos\\Desktop\\Skola\\ZS4roc\\ppds\\cv8\\Asynch\\Asynch\\Asynchronous.csproj": {}
   },
   "projects": {
-    "C:\\Users\\patos\\Downloads\\CleanCodeMaterials\\CleanCodeMaterials\\Code\\Asynch\\Asynch\\Asynchronous.csproj": {
+    "C:\\Users\\patos\\Desktop\\Skola\\ZS4roc\\ppds\\cv8\\Asynch\\Asynch\\Asynchronous.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\patos\\Downloads\\CleanCodeMaterials\\CleanCodeMaterials\\Code\\Asynch\\Asynch\\Asynchronous.csproj",
+        "projectUniqueName": "C:\\Users\\patos\\Desktop\\Skola\\ZS4roc\\ppds\\cv8\\Asynch\\Asynch\\Asynchronous.csproj",
         "projectName": "Asynchronous",
-        "projectPath": "C:\\Users\\patos\\Downloads\\CleanCodeMaterials\\CleanCodeMaterials\\Code\\Asynch\\Asynch\\Asynchronous.csproj",
+        "projectPath": "C:\\Users\\patos\\Desktop\\Skola\\ZS4roc\\ppds\\cv8\\Asynch\\Asynch\\Asynchronous.csproj",
         "packagesPath": "C:\\Users\\patos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\patos\\Downloads\\CleanCodeMaterials\\CleanCodeMaterials\\Code\\Asynch\\Asynch\\obj\\",
+        "outputPath": "C:\\Users\\patos\\Desktop\\Skola\\ZS4roc\\ppds\\cv8\\Asynch\\Asynch\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

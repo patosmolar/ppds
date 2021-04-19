@@ -7,7 +7,7 @@ namespace AsyncBreakfast
     {
         static void Main(string[] args)
         {
-            
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             Coffee cup = PourCoffee();
             Console.WriteLine("coffee is ready");
 
@@ -26,6 +26,8 @@ namespace AsyncBreakfast
             Console.WriteLine("oj is ready");
             Console.WriteLine("Breakfast is ready!");
 
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
             
         }
 
