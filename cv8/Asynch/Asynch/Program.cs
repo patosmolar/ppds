@@ -43,7 +43,7 @@ namespace AsyncBreakfast
         private static void ApplyButter(Toast toast) =>
             Console.WriteLine("Putting butter on the toast");
 
-        private static Toast ToastBread(int slices)
+        private static async Task<Toast> ToastBread(int slices)
         {
             for (int slice = 0; slice < slices; slice++)
             {
