@@ -1,5 +1,19 @@
 from numba import cuda
 import numpy as np
+import skimage.data
+from skimage.color import rgb2gray
+
+import matplotlib.pyplot as plt
+
+full_image = rgb2gray(skimage.data.coffee()).astype(np.float32) / 255
+plt.figure()
+plt.imshow(full_image, cmap='gray')
+plt.title("Full size image:")
+image = full_image[150:350, 200:400].copy() # We don't want a view but an array and therefore use copy()
+plt.figure()
+plt.imshow(image, cmap='gray')
+plt.title("Part of the image we use:")
+plt.show()
 
 @cuda.jit
 def convolve(result, mask, image):
