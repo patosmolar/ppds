@@ -47,4 +47,32 @@ def convolve(result, mask, image):
             if (i_k >= 0) and (i_k < image_rows) and (j_l >= 0) and (j_l < image_cols):  
                 s += mask[k, l] * image[i_k, j_l]
     result[i, j] = s
-    
+
+# We preallocate the result array:
+result = np.empty_like(image)
+
+# We choose a random mask:
+mask = np.random.rand(13, 13).astype(np.float32) 
+mask /= mask.sum()  # We normalize the mask
+print('Mask shape:', mask.shape)
+print('Mask first (3, 3) elements:\n', mask[:3, :3])
+
+# We use blocks of 32x32 pixels:
+blockdim = (32, 32)
+print('Blocks dimensions:', blockdim)
+
+# We compute grid dimensions big enough to cover the whole image:
+griddim = (image.shape[0] // blockdim[0] + 1, image.shape[1] // blockdim[1] + 1)
+print('Grid dimensions:', griddim)
+
+# We apply our convolution to our image:
+convolve[griddim, blockdim](result, mask, image)
+
+# We plot the result:
+plt.figure()
+plt.imshow(image, cmap='gray')
+plt.title("Before convolution:")
+plt.figure()
+plt.imshow(result, cmap='gray')
+plt.title("After convolution:")
+plt.show()
